@@ -90,7 +90,7 @@ local function spawnFruit(fruitType)
     -- Calculate the spawn position in front of the player
     local spawnPosition = humanoidRootPart.Position + humanoidRootPart.CFrame.LookVector * 5
 
-    -- Create the fruit
+    -- Create the fruit part (or model if available)
     local fruit = Instance.new("Part")
     fruit.Name = fruitType
     fruit.Size = Vector3.new(2, 2, 2)
@@ -98,7 +98,11 @@ local function spawnFruit(fruitType)
     fruit.Anchored = true
     fruit.Parent = workspace
 
-    -- Add any additional properties or behaviors to the fruit here
+    -- Optional: Add any other properties like transparency, color, or custom meshes
+    fruit.BrickColor = BrickColor.new("Bright red") -- Example color change
+    -- If you have a model, replace the above with something like:
+    -- local fruitModel = game.ServerStorage.Fruits:FindFirstChild(fruitType)
+    -- fruitModel:Clone().Parent = workspace
     print(fruitType .. " fruit spawned in front of the player!")
 end
 
@@ -111,6 +115,7 @@ for _, fruitType in ipairs(fruits) do
     button.Text = fruitType
     button.Parent = frame
 
+    -- When the button is clicked, spawn the fruit
     button.MouseButton1Click:Connect(function()
         spawnFruit(fruitType)
     end)
